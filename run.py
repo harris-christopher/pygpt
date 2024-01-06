@@ -8,7 +8,7 @@ from pygpt.pygpt import PyGPT
 
 def run():
     args = get_args()
-    pygpt = PyGPT(args.infile, args.start, args.outfile)
+    pygpt = PyGPT(args.infile, args.outfile, args.start, args.end)
     pygpt.process_file()
 
 
@@ -25,7 +25,7 @@ def get_args():
     parser.add_argument(
         "-ls",
         "--line_start",
-        help="Line number with which to start processing",
+        help="Line number with which to start processing (inclusive)",
         dest="start",
         type=int,
         default=0,
@@ -38,6 +38,14 @@ def get_args():
         type=Path,
         dest="outfile",
         required=True,
+    )
+    parser.add_argument(
+        "-le",
+        "--line_end",
+        help="Line number with which to stop processing (exclusive)",
+        dest="end",
+        type=int,
+        required=False,
     )
 
     return parser.parse_args()
